@@ -1,18 +1,55 @@
-## Getting Started
+# Chess System - Jogo de Xadrez em Java
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+<div align="center">
+  <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white" />
+  <img src="https://img.shields.io/badge/POO-005C84?style=for-the-badge" />
+</div>
 
-## Folder Structure
+## Sobre o Projeto
+Este projeto é um jogo de Xadrez completo executado diretamente no console (terminal), desenvolvido inteiramente em **Java**. O sistema aplica conceitos fortes de **Programação Orientada a Objetos (POO)** como Encapsulamento, Herança, Polimorfismo, e Tratamento de Exceções. 
 
-The workspace contains two folders by default, where:
+O tabuleiro e as peças de xadrez foram construídos com base em uma arquitetura em camadas, separando as lógicas genéricas de tabuleiros de mesa (`boardgame`) das regras estritas e específicas do xadrez (`chess`).
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Tecnologias Utilizadas
+* **Backend:** Java (JDK)
+* **Design de Software:** POO (Programação Orientada a Objetos)
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## Funcionalidades
+* **Lógica Completa de Xadrez:** Movimentação padrão de todas as peças (Peão, Torre, Cavalo, Bispo, Rainha, Rei).
+* **Movimentos Especiais:** 
+  * Roque Pequeno (Kingside Castling)
+  * Roque Grande (Queenside Castling)
+  * En Passant
+  * Promoção de Peão
+* **Controle de Estado:** Identificação precisa de estado de Check e Checkmate.
+* **Interface via Console:** Exibição do tabuleiro em tempo real com captura de peças e exibição do histórico de rodadas (com suporte a exibição de cores e limpeza de tela, a depender do terminal).
+* **Tratamento de Exceções:** Sistema robusto impedindo que jogadores realizem movimentos impossíveis, acessem casas inexistentes ou coloquem seu próprio rei em Check.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## Estrutura da Aplicação
+A aplicação segue um padrão rigoroso de separação de camadas:
+* `boardgame`: Camada de tabuleiro genérico. Contém classes base genéricas de `Board` e `Piece`, além de exceções locais. Foi criada visando total reaproveitamento: pode ser usada facilmente como base para a criação de qualquer outro jogo de matriz de tabuleiro (como Damas ou Jogo da Velha).
+* `chess`: Camada de xadrez. Contém a lógica de partida, regras estritas do esporte, os movimentos específicos de cada peça (as sub-classes de `ChessPiece`) e a engine de turnos que detecta fim de jogo e validações (`ChessMatch`).
+* `application`: Camada de interface de usuário. Contém o ponto de entrada do sistema (`Program`) e as abstrações de console (`UI`), onde ocorre a impressão dos dados de tela, tradução das coordenadas do xadrez e interação via teclado com os jogadores.
 
-## Dependency Management
+## 🔧 Como Executar Localmente
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+### 1. Pré-requisitos
+* Ter o **Java Development Kit (JDK)** instalado na sua máquina.
+
+### 2. Executando a Aplicação
+No terminal do seu sistema operacional, navegue até a pasta de arquivos `.class` (geralmente gerada pela IDE como `bin` ou similar) e rode o programa.
+
+Se desejar compilar manualmente pelo terminal a partir do diretório raiz:
+```bash
+# Navegue até a pasta source
+cd src
+
+# Compile todos os arquivos Java
+javac application/Program.java -d ../bin
+
+# Volte um nível e execute a partir da pasta compilada
+cd ..
+java -cp bin application.Program
+```
+
+*(Obs: Por ser uma interface dinâmica feita no terminal, garanta que seu terminal ou console integrado tenha suporte nativo aos códigos de escape ANSI para que as cores das peças e a limpeza de tela funcionem apropriadamente).*
