@@ -106,7 +106,7 @@ public class ChessMatch {
         }
 
         //specialmove en passant
-        if(movedPiece instanceof Pawn && target.getRow() == source.getRow() + 2 || target.getRow() == source.getRow() - 2){
+        if(movedPiece instanceof Pawn && (target.getRow() == source.getRow() + 2 || target.getRow() == source.getRow() - 2)){
             enPassantVulnerable = movedPiece;
         } else {
             enPassantVulnerable = null;
@@ -128,6 +128,22 @@ public class ChessMatch {
         ChessPiece newPiece = newPiece(type, promoted.getColor());
         board.placePiece(newPiece, pos);
         piecesOnTheBoard.add(newPiece);
+
+        check = (testCheck(opponent(promoted.getColor()))) ? true : false;
+
+        boolean wasCheckMate = checkMate;
+        if(testCheckMate(opponent(promoted.getColor()))){
+            checkMate = true;
+            if(!wasCheckMate) {
+                turn--;
+                currentPlayer = promoted.getColor();
+            }
+        } else {
+            checkMate = false;
+            if(wasCheckMate) {
+                nextTurn();
+            }
+        }
 
         return newPiece;
 
